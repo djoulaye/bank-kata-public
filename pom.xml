@@ -11,6 +11,8 @@
     <modules>
         <module>bank-kata-domain</module>
         <module>bank-kata-infrastructure</module>
+        <module>bank-kata-application</module>
+        <module>bank-kata-exposition</module>
     </modules>
 
     <name>bank-kata</name>
@@ -40,6 +42,16 @@
             <dependency>
                 <groupId>fr.ing.interview</groupId>
                 <artifactId>bank-kata-infrastructure</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>fr.ing.interview</groupId>
+                <artifactId>bank-kata-application</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>fr.ing.interview</groupId>
+                <artifactId>bank-kata-exposition</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
