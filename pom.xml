@@ -13,6 +13,7 @@
         <module>bank-kata-infrastructure</module>
         <module>bank-kata-application</module>
         <module>bank-kata-exposition</module>
+        <module>bank-kata-package</module>
     </modules>
 
     <name>bank-kata</name>
@@ -52,6 +53,11 @@
             <dependency>
                 <groupId>fr.ing.interview</groupId>
                 <artifactId>bank-kata-exposition</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>fr.ing.interview</groupId>
+                <artifactId>bank-kata-package</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
