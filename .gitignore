@@ -27,3 +27,4 @@ target/
 
 # MacOS
 .DS_Store
+/.idea/
