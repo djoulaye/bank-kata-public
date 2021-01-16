@@ -15,6 +15,7 @@ target/
 # IntelliJ idea
 *.iml
 .idea/
+.idea
 
 # Eclipse
 .settings/
@@ -26,3 +27,4 @@ target/
 
 # MacOS
 .DS_Store
+/.idea/

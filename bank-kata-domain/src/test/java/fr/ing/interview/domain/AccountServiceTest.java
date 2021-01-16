@@ -1,4 +1,4 @@
-package fr.ing.interview;
+package fr.ing.interview.domain;
 
 
 import org.junit.jupiter.api.Test;
