@@ -2,6 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/bank-kata-application/bank-kata-application.iml" filepath="$PROJECT_DIR$/bank-kata-application/bank-kata-application.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bank-kata-domain/bank-kata-domain.iml" filepath="$PROJECT_DIR$/bank-kata-domain/bank-kata-domain.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bank-kata-exposition/bank-kata-exposition.iml" filepath="$PROJECT_DIR$/bank-kata-exposition/bank-kata-exposition.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bank-kata-infrastructure/bank-kata-infrastructure.iml" filepath="$PROJECT_DIR$/bank-kata-infrastructure/bank-kata-infrastructure.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bank-kata-package/bank-kata-package.iml" filepath="$PROJECT_DIR$/bank-kata-package/bank-kata-package.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/bank-kata-public.iml" filepath="$PROJECT_DIR$/.idea/bank-kata-public.iml" />
     </modules>
   </component>

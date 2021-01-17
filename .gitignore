@@ -6,6 +6,13 @@
 
 # BlueJ files
 *.ctxt
+# Maven
+target/
+
+# Gradle
+.gradle
+**/build/
+!src/**/build/
 
 # IntelliJ idea
 *.iml
@@ -22,3 +29,16 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+.idea
+
+# Eclipse
+.settings/
+.classpath
+.project
+
+# VSCode
+.vscode/
+
+# MacOS
+.DS_Store
+/.idea/
