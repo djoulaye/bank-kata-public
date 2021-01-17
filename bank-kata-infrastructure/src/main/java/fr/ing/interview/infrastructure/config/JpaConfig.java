@@ -8,8 +8,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(considerNestedRepositories = true)
-@EntityScan("fr.ing.interview.infrastructure.entities")
-@ComponentScan("fr.ing.interview.infrastructure.repositories")
+@EnableJpaRepositories(basePackages = {"fr.ing.interview.infrastructure.dao"}, considerNestedRepositories = true)
+@EntityScan("fr.ing.interview.infrastructure.entity")
+@ComponentScan("fr.ing.interview.infrastructure.repository")
 public class JpaConfig {
 }
