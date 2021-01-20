@@ -25,11 +25,12 @@ public class Account {
         }
     }
 
-    public boolean withdraw(double amount) throws NotAuthorizedOverdraftException {
+    public boolean withdraw(double amount)  {
         if (balance >= amount) {
             balance = balance - amount;
             return true;
         } else {
+            //TODO mettre autre message si balance = 0
             throw new NotAuthorizedOverdraftException("Not authorized overdraft - Maximum withdraw is €" + balance);
         }
     }
@@ -41,4 +42,5 @@ public class Account {
     public double getBalance() {
         return balance;
     }
+
 }

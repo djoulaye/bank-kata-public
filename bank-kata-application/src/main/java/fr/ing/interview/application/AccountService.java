@@ -2,6 +2,7 @@ package fr.ing.interview.application;
 
 import fr.ing.interview.domain.Account;
 import fr.ing.interview.domain.AccountRepository;
+import fr.ing.interview.domain.InvalidAmountException;
 import fr.ing.interview.domain.NotAuthorizedOverdraftException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,20 +23,27 @@ public class AccountService {
 
     public void depositMoney(String accountNumber, double amount) {
         Account account = getAmount(accountNumber);
-        account.deposit(amount);
+        try {
+            account.deposit(amount);
+        } catch (InvalidAmountException e){
+            throw new InvalidAmountException(e.getMessage());
+        }
         updateAccount(account);
     }
 
-    public boolean withdrawMoney(String accountNumber, double amount) {
-        Account account = getAmount(accountNumber);
-        boolean withdraw;
+    public void withdrawMoney(String accountNumber, double amount) {
+        Account account;
         try {
-            withdraw = account.withdraw(amount);
+            account = getAmount(accountNumber);
+        } catch (UnknownAccountException e) {
+            throw new UnknownAccountException(e.getMessage());
+        }
+        try {
+            account.withdraw(amount);
         } catch (NotAuthorizedOverdraftException e) {
             throw new NotAuthorizedOverdraftException(e.getMessage());
         }
         updateAccount(account);
-        return withdraw;
     }
 
     public Account getAmount(String accountNumber) {

@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
-class AccountServiceTest {
+class AccountTest {
 
     private static final String ACCOUNT_NUMBER = "123456";
 
