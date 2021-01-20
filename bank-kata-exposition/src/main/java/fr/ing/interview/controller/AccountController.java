@@ -2,7 +2,9 @@ package fr.ing.interview.controller;
 
 import fr.ing.interview.application.AccountService;
 import fr.ing.interview.domain.Account;
+import fr.ing.interview.domain.NotAuthorizedOverdraftException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +20,7 @@ public class AccountController {
 
     @GetMapping("/get")
     public ResponseEntity<Account> getAccount(@RequestParam String accountNumber) {
-        return ResponseEntity.ok(accountService.displayBalance(accountNumber));
+        return ResponseEntity.ok(accountService.getAmount(accountNumber));
     }
 
     @GetMapping("/create")
@@ -41,7 +43,11 @@ public class AccountController {
 
     @GetMapping("/withdraw")
     public ResponseEntity<String> withdrawMoney(@RequestParam String accountNumber, @RequestParam double amount) {
-        accountService.withdrawMoney(accountNumber, amount);
-        return ResponseEntity.ok("Account successfully debited");
+        try {
+            accountService.withdrawMoney(accountNumber, amount);
+        } catch (NotAuthorizedOverdraftException e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>("Account successfully debited", HttpStatus.OK);
     }
 }

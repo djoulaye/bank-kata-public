@@ -2,6 +2,7 @@ package fr.ing.interview.application;
 
 import fr.ing.interview.domain.Account;
 import fr.ing.interview.domain.AccountRepository;
+import fr.ing.interview.domain.NotAuthorizedOverdraftException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,18 +21,24 @@ public class AccountService {
     }
 
     public void depositMoney(String accountNumber, double amount) {
-        Account account = displayBalance(accountNumber);
+        Account account = getAmount(accountNumber);
         account.deposit(amount);
         updateAccount(account);
     }
 
-    public void withdrawMoney(String accountNumber, double amount) {
-        Account account = displayBalance(accountNumber);
-        account.withdraw(amount);
+    public boolean withdrawMoney(String accountNumber, double amount) {
+        Account account = getAmount(accountNumber);
+        boolean withdraw;
+        try {
+            withdraw = account.withdraw(amount);
+        } catch (NotAuthorizedOverdraftException e) {
+            throw new NotAuthorizedOverdraftException(e.getMessage());
+        }
         updateAccount(account);
+        return withdraw;
     }
 
-    public Account displayBalance(String accountNumber) {
+    public Account getAmount(String accountNumber) {
         Optional<Account> accountOptional = accountRepository.findByAccountNumber(accountNumber);
         if (accountOptional.isPresent()) {
             return accountOptional.get();

@@ -25,7 +25,7 @@ public class Account {
         }
     }
 
-    public boolean withdraw(double amount) {
+    public boolean withdraw(double amount) throws NotAuthorizedOverdraftException {
         if (balance >= amount) {
             balance = balance - amount;
             return true;
