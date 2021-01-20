@@ -21,28 +21,16 @@ public class AccountService {
         return Collections.unmodifiableList(accountRepository.listAll());
     }
 
-    public void depositMoney(String accountNumber, double amount) {
+    public void depositMoney(String accountNumber, double amount) throws InvalidAmountException {
         Account account = getAmount(accountNumber);
-        try {
-            account.deposit(amount);
-        } catch (InvalidAmountException e){
-            throw new InvalidAmountException(e.getMessage());
-        }
+        account.deposit(amount);
         updateAccount(account);
     }
 
-    public void withdrawMoney(String accountNumber, double amount) {
+    public void withdrawMoney(String accountNumber, double amount) throws NotAuthorizedOverdraftException, UnknownAccountException {
         Account account;
-        try {
-            account = getAmount(accountNumber);
-        } catch (UnknownAccountException e) {
-            throw new UnknownAccountException(e.getMessage());
-        }
-        try {
-            account.withdraw(amount);
-        } catch (NotAuthorizedOverdraftException e) {
-            throw new NotAuthorizedOverdraftException(e.getMessage());
-        }
+        account = getAmount(accountNumber);
+        account.withdraw(amount);
         updateAccount(account);
     }
 
