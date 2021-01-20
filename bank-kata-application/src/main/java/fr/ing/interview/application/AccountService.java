@@ -20,18 +20,18 @@ public class AccountService {
     }
 
     public void depositMoney(String accountNumber, double amount) {
-        Account account = getAccount(accountNumber);
+        Account account = displayBalance(accountNumber);
         account.deposit(amount);
         updateAccount(account);
     }
 
     public void withdrawMoney(String accountNumber, double amount) {
-        Account account = getAccount(accountNumber);
+        Account account = displayBalance(accountNumber);
         account.withdraw(amount);
         updateAccount(account);
     }
 
-    public Account getAccount(String accountNumber) {
+    public Account displayBalance(String accountNumber) {
         Optional<Account> accountOptional = accountRepository.findByAccountNumber(accountNumber);
         if (accountOptional.isPresent()) {
             return accountOptional.get();

@@ -18,7 +18,7 @@ public class AccountController {
 
     @GetMapping("/get")
     public ResponseEntity<Account> getAccount(@RequestParam String accountNumber) {
-        return ResponseEntity.ok(accountService.getAccount(accountNumber));
+        return ResponseEntity.ok(accountService.displayBalance(accountNumber));
     }
 
     @GetMapping("/create")
