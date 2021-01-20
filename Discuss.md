@@ -1,6 +1,7 @@
 # Questions
 - pourquoi la classe de test dans le domaine s'appelle AccountServiceTest ?
-
+- Failed to execute goal org.apache.maven.plugins:maven-toolchains-plugin:3.0.0:toolchain (default) on project bank-kata: Misconfigured toolchains.
+quand je fais un mvn install...
 
 # Propositions MNS : 
 
