@@ -1,6 +1,7 @@
 package fr.ing.interview.controller;
 
 import fr.ing.interview.application.AccountService;
+import fr.ing.interview.application.AlreadyExistsAccountException;
 import fr.ing.interview.application.UnknownAccountException;
 import fr.ing.interview.domain.Account;
 import fr.ing.interview.domain.InvalidAmountException;
@@ -18,20 +19,34 @@ public class AccountController {
     private AccountService accountService;
 
     @GetMapping("/displayBalance")
-    public ResponseEntity<Account> displayBalance(@RequestParam String accountNumber) {
-        return ResponseEntity.ok(accountService.getAmount(accountNumber));
+    public ResponseEntity<String> displayBalance(@RequestParam String accountNumber) {
+        double balance;
+        try {
+            balance = accountService.getBalance(accountNumber);
+        } catch (UnknownAccountException e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(String.valueOf(balance), HttpStatus.OK);
     }
 
     @PostMapping("/create")
     public ResponseEntity<String> createAccount(@RequestParam String accountNumber) {
-        accountService.createAccount(accountNumber);
-        return ResponseEntity.ok("Account successfully created");
+        try {
+            accountService.createAccount(accountNumber);
+        } catch (AlreadyExistsAccountException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>("Account successfully created", HttpStatus.OK);
     }
 
     @DeleteMapping("/delete")
     public ResponseEntity<String> deleteAccount(@RequestParam String accountNumber) {
-        accountService.deleteAccount(accountNumber);
-        return ResponseEntity.ok("Account successfully deleted");
+        try {
+            accountService.deleteAccount(accountNumber);
+        } catch (UnknownAccountException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>("Account successfully deleted", HttpStatus.OK);
     }
 
     @PutMapping("/deposit")

@@ -40,4 +40,9 @@ public class JpaAccountRepository implements AccountRepository {
     public void delete(String accountNumber) {
         jpaAccountDAO.deleteById(accountNumber);
     }
+
+    @Override
+    public boolean isExists(String accountNumber) {
+         return jpaAccountDAO.existsById(accountNumber);
+    }
 }

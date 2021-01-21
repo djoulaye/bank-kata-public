@@ -11,4 +11,6 @@ public interface AccountRepository {
     void save(Account account);
 
     void delete(String accountNumber);
+
+    boolean isExists(String accountNumber);
 }

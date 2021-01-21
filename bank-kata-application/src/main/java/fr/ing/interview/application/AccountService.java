@@ -22,19 +22,19 @@ public class AccountService {
     }
 
     public void depositMoney(String accountNumber, double amount) throws InvalidAmountException {
-        Account account = getAmount(accountNumber);
+        Account account = getAccount(accountNumber);
         account.deposit(amount);
         updateAccount(account);
     }
 
     public void withdrawMoney(String accountNumber, double amount) throws NotAuthorizedOverdraftException, UnknownAccountException {
         Account account;
-        account = getAmount(accountNumber);
+        account = getAccount(accountNumber);
         account.withdraw(amount);
         updateAccount(account);
     }
 
-    public Account getAmount(String accountNumber) {
+    public Account getAccount(String accountNumber) throws UnknownAccountException{
         Optional<Account> accountOptional = accountRepository.findByAccountNumber(accountNumber);
         if (accountOptional.isPresent()) {
             return accountOptional.get();
@@ -43,16 +43,41 @@ public class AccountService {
         }
     }
 
-    public void createAccount(String accountNumber) {
-        accountRepository.save(new Account(accountNumber));
+    public double getBalance(String accountNumber) throws  UnknownAccountException{
+        double balance;
+        //TODO ne devrait pas être nécessaire mais l'exception ne se propage pas sinon :/
+        try {
+            balance = getAccount(accountNumber).getBalance();
+        } catch (UnknownAccountException e){
+            throw new UnknownAccountException(e.getMessage());
+        }
+        return balance;
+    }
+
+    public void createAccount(String accountNumber) throws AlreadyExistsAccountException{
+        if (!isExist(accountNumber)){
+            accountRepository.save(new Account(accountNumber));
+        }
+        else {
+            throw new AlreadyExistsAccountException ("Account " + accountNumber + " already exists");
+        }
     }
 
     public void deleteAccount(String accountNumber) {
-        accountRepository.delete(accountNumber);
+        if (isExist(accountNumber)){
+            accountRepository.delete(accountNumber);
+        }
+        else {
+            throw new UnknownAccountException("Account " + accountNumber + " doesn't exist");
+        }
     }
 
     private void updateAccount(Account account) {
         accountRepository.save(account);
+    }
+
+    private boolean isExist(String accountNumber){
+        return accountRepository.isExists(accountNumber);
     }
 
 }
