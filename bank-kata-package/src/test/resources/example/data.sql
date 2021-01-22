@@ -1,0 +1,5 @@
+INSERT INTO ACCOUNT (ACCOUNT_NUMBER, BALANCE)
+VALUES ('1111', 120),
+       ('2222', 0),
+       ('3333', 50),
+       ('4444', 760);

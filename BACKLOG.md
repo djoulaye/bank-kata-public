@@ -1,4 +1,5 @@
 # Améliorations
+
 - renommer les méthodes
 - renommer la classe de test
 - modifier les request mappings
@@ -11,6 +12,7 @@
 # US
 
 # Bonnes pratiques
+
 - TDD
 - DDD
 - Api Octo
