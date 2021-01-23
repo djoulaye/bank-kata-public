@@ -34,7 +34,7 @@ public class AccountService {
         updateAccount(account);
     }
 
-    public Account getAccount(String accountNumber) throws UnknownAccountException{
+    public Account getAccount(String accountNumber) throws UnknownAccountException {
         Optional<Account> accountOptional = accountRepository.findByAccountNumber(accountNumber);
         if (accountOptional.isPresent()) {
             return accountOptional.get();
@@ -43,31 +43,29 @@ public class AccountService {
         }
     }
 
-    public double getBalance(String accountNumber) throws  UnknownAccountException{
+    public double getBalance(String accountNumber) throws UnknownAccountException {
         double balance;
         //TODO ne devrait pas être nécessaire mais l'exception ne se propage pas sinon :/
         try {
             balance = getAccount(accountNumber).getBalance();
-        } catch (UnknownAccountException e){
+        } catch (UnknownAccountException e) {
             throw new UnknownAccountException(e.getMessage());
         }
         return balance;
     }
 
-    public void createAccount(String accountNumber) throws AlreadyExistsAccountException{
-        if (!isExist(accountNumber)){
+    public void createAccount(String accountNumber) throws AlreadyExistsAccountException {
+        if (!isExist(accountNumber)) {
             accountRepository.save(new Account(accountNumber));
-        }
-        else {
-            throw new AlreadyExistsAccountException ("Account " + accountNumber + " already exists");
+        } else {
+            throw new AlreadyExistsAccountException("Account " + accountNumber + " already exists");
         }
     }
 
     public void deleteAccount(String accountNumber) {
-        if (isExist(accountNumber)){
+        if (isExist(accountNumber)) {
             accountRepository.delete(accountNumber);
-        }
-        else {
+        } else {
             throw new UnknownAccountException("Account " + accountNumber + " doesn't exist");
         }
     }
@@ -76,7 +74,7 @@ public class AccountService {
         accountRepository.save(account);
     }
 
-    private boolean isExist(String accountNumber){
+    private boolean isExist(String accountNumber) {
         return accountRepository.isExists(accountNumber);
     }
 

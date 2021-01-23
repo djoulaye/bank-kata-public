@@ -3,7 +3,6 @@ package fr.ing.interview.controller;
 import fr.ing.interview.application.AccountService;
 import fr.ing.interview.application.AlreadyExistsAccountException;
 import fr.ing.interview.application.UnknownAccountException;
-import fr.ing.interview.domain.Account;
 import fr.ing.interview.domain.InvalidAmountException;
 import fr.ing.interview.domain.NotAuthorizedOverdraftException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,7 @@ public class AccountController {
         double balance;
         try {
             balance = accountService.getBalance(accountNumber);
-        } catch (UnknownAccountException e){
+        } catch (UnknownAccountException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(String.valueOf(balance), HttpStatus.OK);

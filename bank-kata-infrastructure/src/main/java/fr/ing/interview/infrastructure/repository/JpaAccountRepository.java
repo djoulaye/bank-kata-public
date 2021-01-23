@@ -43,6 +43,6 @@ public class JpaAccountRepository implements AccountRepository {
 
     @Override
     public boolean isExists(String accountNumber) {
-         return jpaAccountDAO.existsById(accountNumber);
+        return jpaAccountDAO.existsById(accountNumber);
     }
 }
