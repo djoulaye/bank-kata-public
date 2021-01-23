@@ -17,8 +17,8 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
 
-    @GetMapping("/displayBalance")
-    public ResponseEntity<String> displayBalance(@RequestParam String accountNumber) {
+    @GetMapping("/displayBalance/{accountNumber}")
+    public ResponseEntity<String> displayBalance(@PathVariable("accountNumber") String accountNumber) {
         double balance;
         try {
             balance = accountService.getBalance(accountNumber);
