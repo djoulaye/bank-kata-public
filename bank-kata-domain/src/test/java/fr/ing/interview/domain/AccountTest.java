@@ -1,6 +1,7 @@
 package fr.ing.interview.domain;
 
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -10,10 +11,16 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-
+@DisplayName("Tests on account entity")
 class AccountTest {
 
     private static final String ACCOUNT_NUMBER = "123456";
+    private Account account;
+
+    @BeforeEach
+    private void init() {
+        account = new Account(ACCOUNT_NUMBER);
+    }
 
     @Nested
     @DisplayName("Tests on deposit function")
@@ -22,7 +29,6 @@ class AccountTest {
         @DisplayName("€0.01 deposit must be refused")
         void given_amount_of_0_01_when_deposit_on_existing_account_then_refuse_deposit() {
             double amount = 0.01;
-            Account account = new Account(ACCOUNT_NUMBER);
             assertThatThrownBy(() -> account.deposit(amount)).isInstanceOf(InvalidAmountException.class);
         }
 
@@ -30,7 +36,6 @@ class AccountTest {
         @DisplayName("Minimum deposit must be accepted")
         void given_amount_of_0_02_when_deposit_on_existing_account_then_accept_deposit() {
             double amount = 0.02;
-            Account account = new Account(ACCOUNT_NUMBER);
             assertThat(account.deposit(amount)).isTrue();
         }
 
@@ -38,7 +43,6 @@ class AccountTest {
         @DisplayName("Negative deposit must be refused")
         void given_negative_amount_when_deposit_on_existing_account_then_refuse_deposit() {
             double amount = -0.01;
-            Account account = new Account(ACCOUNT_NUMBER);
             assertThatThrownBy(() -> account.deposit(amount)).isInstanceOf(InvalidAmountException.class);
         }
 
@@ -46,7 +50,6 @@ class AccountTest {
         @ValueSource(doubles = {15.00, 150.50, 1000.99})
         @DisplayName("Deposit superior of minimum must be accepted")
         void given_amount_superior_of_0_02_when_deposit_on_existing_account_then_accept_deposit(Double amount) {
-            Account account = new Account(ACCOUNT_NUMBER);
             assertThat(account.deposit(amount)).isTrue();
         }
     }
@@ -57,7 +60,6 @@ class AccountTest {
         @Test
         @DisplayName("Withdraw inferior to balance must be accepted")
         void given_amount_inferior_to_balance_when_withdraw_on_existing_account_then_accept_withdraw() {
-            Account account = new Account(ACCOUNT_NUMBER);
             account.deposit(10.00);
             assertThat(account.withdraw(5.00)).isTrue();
         }
@@ -65,7 +67,6 @@ class AccountTest {
         @Test
         @DisplayName("Withdraw equals to balance must be accepted")
         void given_amount_equals_to_balance_when_withdraw_on_existing_account_then_accept_withdraw() {
-            Account account = new Account(ACCOUNT_NUMBER);
             account.deposit(10.00);
             assertThat(account.withdraw(10.00)).isTrue();
         }
@@ -73,7 +74,6 @@ class AccountTest {
         @Test
         @DisplayName("Withdraw superior to balance must be refused")
         void given_amount_superior_to_balance_when_withdraw_on_existing_account_then_refuse_withdraw() {
-            Account account = new Account(ACCOUNT_NUMBER);
             account.deposit(10.00);
             assertThatThrownBy(() -> account.withdraw(15.00)).isInstanceOf(NotAuthorizedOverdraftException.class);
         }
