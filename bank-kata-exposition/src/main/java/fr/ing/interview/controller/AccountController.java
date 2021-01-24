@@ -1,10 +1,10 @@
 package fr.ing.interview.controller;
 
 import fr.ing.interview.application.AccountService;
-import fr.ing.interview.application.AlreadyExistsAccountException;
-import fr.ing.interview.application.UnknownAccountException;
-import fr.ing.interview.domain.InvalidAmountException;
-import fr.ing.interview.domain.NotAuthorizedOverdraftException;
+import fr.ing.interview.application.exception.AlreadyExistsAccountException;
+import fr.ing.interview.application.exception.UnknownAccountException;
+import fr.ing.interview.domain.exception.InvalidAmountException;
+import fr.ing.interview.domain.exception.NotAuthorizedOverdraftException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

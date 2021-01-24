@@ -1,18 +1,27 @@
 package fr.ing.interview.domain;
 
+import fr.ing.interview.domain.exception.InvalidAmountException;
+import fr.ing.interview.domain.exception.NotAuthorizedOverdraftException;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class Account {
 
     public static final double MINIMAL_DEPOSIT = 0.02;
     private final String accountNumber;
     private double balance;
+    private List<Operation> operations;
 
     public Account(String accountNumber) {
         this.accountNumber = accountNumber;
         this.balance = 0;
+        this.operations = new ArrayList<>();
     }
 
     public Account(String accountNumber, double balance) {
-        this.accountNumber = accountNumber;
+        this(accountNumber);
         this.balance = balance;
     }
 
@@ -43,4 +52,7 @@ public class Account {
         return balance;
     }
 
+    public List<Operation> getOperations() {
+        return Collections.unmodifiableList(operations);
+    }
 }

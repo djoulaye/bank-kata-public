@@ -1,5 +1,7 @@
 package fr.ing.interview.application;
 
+import fr.ing.interview.application.exception.AlreadyExistsAccountException;
+import fr.ing.interview.application.exception.UnknownAccountException;
 import fr.ing.interview.domain.AccountRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

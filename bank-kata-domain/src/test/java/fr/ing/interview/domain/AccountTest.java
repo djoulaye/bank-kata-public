@@ -1,6 +1,8 @@
 package fr.ing.interview.domain;
 
 
+import fr.ing.interview.domain.exception.InvalidAmountException;
+import fr.ing.interview.domain.exception.NotAuthorizedOverdraftException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

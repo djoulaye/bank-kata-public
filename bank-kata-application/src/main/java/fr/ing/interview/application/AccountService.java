@@ -1,9 +1,11 @@
 package fr.ing.interview.application;
 
+import fr.ing.interview.application.exception.AlreadyExistsAccountException;
+import fr.ing.interview.application.exception.UnknownAccountException;
 import fr.ing.interview.domain.Account;
 import fr.ing.interview.domain.AccountRepository;
-import fr.ing.interview.domain.InvalidAmountException;
-import fr.ing.interview.domain.NotAuthorizedOverdraftException;
+import fr.ing.interview.domain.exception.InvalidAmountException;
+import fr.ing.interview.domain.exception.NotAuthorizedOverdraftException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
