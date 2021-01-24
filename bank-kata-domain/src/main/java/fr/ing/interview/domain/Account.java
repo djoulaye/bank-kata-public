@@ -1,5 +1,10 @@
 package fr.ing.interview.domain;
 
+import fr.ing.interview.domain.exception.ForbiddenWithdrawOnNullBalanceException;
+import fr.ing.interview.domain.exception.IllegalWithdrawAmountException;
+import fr.ing.interview.domain.exception.InvalidAmountException;
+import fr.ing.interview.domain.exception.NotAuthorizedOverdraftException;
+
 public class Account {
 
     public static final double MINIMAL_DEPOSIT = 0.02;
@@ -26,13 +31,26 @@ public class Account {
     }
 
     public boolean withdraw(double amount) {
+        if (isaNegativeAmount(amount)){
+            throw new IllegalWithdrawAmountException("Illegal amount for withdraw - Amount must be positive");
+        }
+        if (isNullBalance()) {
+            throw new ForbiddenWithdrawOnNullBalanceException("Forbidden withdraw on account with null balance");
+        }
         if (balance >= amount) {
             balance = balance - amount;
             return true;
         } else {
-            //TODO mettre autre message si balance = 0
             throw new NotAuthorizedOverdraftException("Not authorized overdraft - Maximum withdraw is €" + balance);
         }
+    }
+
+    private boolean isNullBalance() {
+        return balance == 0;
+    }
+
+    private boolean isaNegativeAmount(double amount) {
+        return amount < 0;
     }
 
     public String getAccountNumber() {
