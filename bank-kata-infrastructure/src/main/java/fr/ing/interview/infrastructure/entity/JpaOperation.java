@@ -2,22 +2,18 @@ package fr.ing.interview.infrastructure.entity;
 
 import fr.ing.interview.domain.Operation;
 import fr.ing.interview.domain.OperationDirection;
-import org.hibernate.annotations.Generated;
-import org.hibernate.annotations.GenerationTime;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity(name = "Operation")
 @Table(name = "OPERATION")
 public class JpaOperation {
 
     @Id
-    @Generated(GenerationTime.INSERT)
-    private Long operationId;
-
-    @ManyToOne
-    private JpaAccount account;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private long operationId;
 
     private Date operationDate;
     @Enumerated(EnumType.STRING)
@@ -28,13 +24,14 @@ public class JpaOperation {
     }
 
     public JpaOperation(Operation operation) {
+        this.operationId = Objects.isNull(operation.getOperationId()) ? 0 : operation.getOperationId();
         this.operationDate = operation.getOperationDate();
         this.direction = operation.getDirection();
         this.amount = operation.getAmount();
     }
 
     public Operation toOperation() {
-        return new Operation(direction, amount, operationDate);
+        return new Operation(operationId, direction, amount, operationDate);
     }
 
 }
