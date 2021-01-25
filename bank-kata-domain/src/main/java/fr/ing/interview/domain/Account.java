@@ -20,9 +20,10 @@ public class Account {
         this.operations = new ArrayList<>();
     }
 
-    public Account(String accountNumber, double balance) {
+    public Account(String accountNumber, double balance, List<Operation> operations) {
         this(accountNumber);
         this.balance = balance;
+        this.operations = operations;
     }
 
     public boolean deposit(Operation operation) {

@@ -36,4 +36,5 @@ public class JpaOperation {
     public Operation toOperation() {
         return new Operation(direction, amount, operationDate);
     }
+
 }
