@@ -20,12 +20,12 @@ public class MoneyTransferService implements MoneyTransfer {
 
     public void depositMoneyToAccount(String accountNumber, double amount) throws InvalidAmountException, UnknownAccountException {
         Operation operation = operationService.createDeposit(amount);
-        accountService.depositMoney(accountNumber, amount);
+        accountService.depositMoney(accountNumber, operation);
 
     }
 
     public void withdrawMoneyFromAccount(String accountNumber, double amount) throws NotAuthorizedOverdraftException, UnknownAccountException {
         Operation operation = operationService.createWithdraw(amount);
-        accountService.withdrawMoney(accountNumber, amount);
+        accountService.withdrawMoney(accountNumber, operation);
     }
 }

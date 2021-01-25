@@ -4,6 +4,7 @@ import fr.ing.interview.application.exception.AlreadyExistsAccountException;
 import fr.ing.interview.application.exception.UnknownAccountException;
 import fr.ing.interview.domain.Account;
 import fr.ing.interview.domain.AccountRepository;
+import fr.ing.interview.domain.Operation;
 import fr.ing.interview.domain.exception.InvalidAmountException;
 import fr.ing.interview.domain.exception.NotAuthorizedOverdraftException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,16 +24,16 @@ public class AccountService {
         return Collections.unmodifiableList(accountRepository.listAll());
     }
 
-    public void depositMoney(String accountNumber, double amount) throws InvalidAmountException {
+    public void depositMoney(String accountNumber, Operation operation) throws InvalidAmountException {
         Account account = getAccount(accountNumber);
-        account.deposit(amount);
+        account.deposit(operation);
         updateAccount(account);
     }
 
-    public void withdrawMoney(String accountNumber, double amount) throws NotAuthorizedOverdraftException, UnknownAccountException {
+    public void withdrawMoney(String accountNumber, Operation operation) throws NotAuthorizedOverdraftException, UnknownAccountException {
         Account account;
         account = getAccount(accountNumber);
-        account.withdraw(amount);
+        account.withdraw(operation);
         updateAccount(account);
     }
 

@@ -25,18 +25,20 @@ public class Account {
         this.balance = balance;
     }
 
-    public boolean deposit(double amount) {
-        if (amount >= MINIMAL_DEPOSIT) {
-            balance = balance + amount;
+    public boolean deposit(Operation operation) {
+        if (operation.getAmount() >= MINIMAL_DEPOSIT) {
+            balance = balance + operation.getAmount();
+            operations.add(operation);
             return true;
         } else {
             throw new InvalidAmountException("Invalid amount - Must be at least €" + MINIMAL_DEPOSIT);
         }
     }
 
-    public boolean withdraw(double amount) {
-        if (balance >= amount) {
-            balance = balance - amount;
+    public boolean withdraw(Operation operation) {
+        if (balance >= operation.getAmount()) {
+            balance = balance - operation.getAmount();
+            operations.add(operation);
             return true;
         } else {
             //TODO mettre autre message si balance = 0

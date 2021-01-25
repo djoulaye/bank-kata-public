@@ -3,6 +3,7 @@ package fr.ing.interview.application;
 import fr.ing.interview.application.exception.AlreadyExistsAccountException;
 import fr.ing.interview.application.exception.UnknownAccountException;
 import fr.ing.interview.domain.AccountRepository;
+import fr.ing.interview.domain.Operation;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,7 +29,7 @@ class AccountServiceTest {
 
     @Test
     void deposit_amount_on_not_existing_account_should_throw_exception() {
-        assertThatThrownBy(() -> accountService.depositMoney(NOT_EXISTING_ACCOUNT_NUMBER, 2)).isInstanceOf(UnknownAccountException.class);
+        assertThatThrownBy(() -> accountService.depositMoney(NOT_EXISTING_ACCOUNT_NUMBER, any(Operation.class))).isInstanceOf(UnknownAccountException.class);
     }
 
     @Test
