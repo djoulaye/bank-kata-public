@@ -26,6 +26,6 @@ public class MoneyTransferService implements MoneyTransfer {
 
     public void withdrawMoneyFromAccount(String accountNumber, double amount) throws NotAuthorizedOverdraftException, UnknownAccountException {
         Operation operation = operationService.createWithdraw(amount);
-        accountService.depositMoney(accountNumber, amount);
+        accountService.withdrawMoney(accountNumber, amount);
     }
 }
