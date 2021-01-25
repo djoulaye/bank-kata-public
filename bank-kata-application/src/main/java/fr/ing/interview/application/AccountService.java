@@ -45,17 +45,6 @@ public class AccountService {
         }
     }
 
-    public double getBalance(String accountNumber) throws UnknownAccountException {
-        double balance;
-        //TODO ne devrait pas être nécessaire mais l'exception ne se propage pas sinon :/
-        try {
-            balance = getAccount(accountNumber).getBalance();
-        } catch (UnknownAccountException e) {
-            throw new UnknownAccountException(e.getMessage());
-        }
-        return balance;
-    }
-
     public void createAccount(String accountNumber) throws AlreadyExistsAccountException {
         if (!isExist(accountNumber)) {
             accountRepository.save(new Account(accountNumber));

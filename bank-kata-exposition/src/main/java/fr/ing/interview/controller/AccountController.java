@@ -1,6 +1,8 @@
 package fr.ing.interview.controller;
 
-import fr.ing.interview.application.AccountService;
+import fr.ing.interview.application.AccountInformation;
+import fr.ing.interview.application.AccountManagement;
+import fr.ing.interview.application.MoneyTransfer;
 import fr.ing.interview.application.exception.AlreadyExistsAccountException;
 import fr.ing.interview.application.exception.UnknownAccountException;
 import fr.ing.interview.domain.exception.InvalidAmountException;
@@ -15,13 +17,19 @@ import org.springframework.web.bind.annotation.*;
 public class AccountController {
 
     @Autowired
-    private AccountService accountService;
+    private AccountInformation accountInformation;
+
+    @Autowired
+    private AccountManagement accountManagement;
+
+    @Autowired
+    private MoneyTransfer moneyTransfer;
 
     @GetMapping("/displayBalance/{accountNumber}")
     public ResponseEntity<String> displayBalance(@PathVariable("accountNumber") String accountNumber) {
         double balance;
         try {
-            balance = accountService.getBalance(accountNumber);
+            balance = accountInformation.getBalanceOfAccount(accountNumber);
         } catch (UnknownAccountException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -31,7 +39,7 @@ public class AccountController {
     @PostMapping("/create")
     public ResponseEntity<String> createAccount(@RequestParam String accountNumber) {
         try {
-            accountService.createAccount(accountNumber);
+            accountManagement.createAccount(accountNumber);
         } catch (AlreadyExistsAccountException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -41,7 +49,7 @@ public class AccountController {
     @DeleteMapping("/delete")
     public ResponseEntity<String> deleteAccount(@RequestParam String accountNumber) {
         try {
-            accountService.deleteAccount(accountNumber);
+            accountManagement.deleteAccount(accountNumber);
         } catch (UnknownAccountException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -51,7 +59,7 @@ public class AccountController {
     @PutMapping("/deposit")
     public ResponseEntity<String> depositMoney(@RequestParam String accountNumber, @RequestParam double amount) {
         try {
-            accountService.depositMoney(accountNumber, amount);
+            moneyTransfer.depositMoneyToAccount(accountNumber, amount);
         } catch (InvalidAmountException | UnknownAccountException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -61,7 +69,7 @@ public class AccountController {
     @PutMapping("/withdraw")
     public ResponseEntity<String> withdrawMoney(@RequestParam String accountNumber, @RequestParam double amount) {
         try {
-            accountService.withdrawMoney(accountNumber, amount);
+            moneyTransfer.withdrawMoneyFromAccount(accountNumber, amount);
         } catch (NotAuthorizedOverdraftException | UnknownAccountException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
