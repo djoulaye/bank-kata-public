@@ -5,6 +5,7 @@ import fr.ing.interview.application.AccountManagement;
 import fr.ing.interview.application.MoneyTransfer;
 import fr.ing.interview.application.exception.AlreadyExistsAccountException;
 import fr.ing.interview.application.exception.UnknownAccountException;
+import fr.ing.interview.domain.Account;
 import fr.ing.interview.domain.exception.InvalidAmountException;
 import fr.ing.interview.domain.exception.NotAuthorizedOverdraftException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,17 @@ public class AccountController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(String.valueOf(balance), HttpStatus.OK);
+    }
+
+    @GetMapping("/displayHistory/{accountNumber}")
+    public ResponseEntity<Account> displayHistory(@PathVariable("accountNumber") String accountNumber) {
+        Account account;
+        try {
+            account = accountInformation.getHistoryOfAccount(accountNumber);
+        } catch (UnknownAccountException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(account, HttpStatus.OK);
     }
 
     @PostMapping("/create")
