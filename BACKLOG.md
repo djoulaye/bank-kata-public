@@ -10,7 +10,7 @@ X- gérer l'exception dans le contrôleur
 - décrire la structure Maven
 
 # US
-- US2.1
+X- US2.1
 > un retrait négatif est impossible (fallait-il vraiment le préciser...)
 > Faire cette US en TDD 
 - US 4 :
@@ -23,6 +23,9 @@ X- gérer l'exception dans le contrôleur
 - US 6 :
 > Enrichir la liste des comptes avec le nom et le prénom du client, et le solde du compte
 > Coder en TDD
+- US 7 : 
+> créer des comptes pour personnes physiques et personnes morales
+>utiliser le pattern factory (enum factory ?)
 
 # Bonnes pratiques
 
