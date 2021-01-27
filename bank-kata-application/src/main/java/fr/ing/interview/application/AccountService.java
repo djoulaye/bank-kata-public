@@ -1,7 +1,10 @@
 package fr.ing.interview.application;
 
+import fr.ing.interview.application.exception.AlreadyExistsAccountException;
+import fr.ing.interview.application.exception.UnknownAccountException;
 import fr.ing.interview.domain.Account;
 import fr.ing.interview.domain.AccountRepository;
+import fr.ing.interview.domain.Operation;
 import fr.ing.interview.domain.exception.InvalidAmountException;
 import fr.ing.interview.domain.exception.NotAuthorizedOverdraftException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,16 +24,16 @@ public class AccountService {
         return Collections.unmodifiableList(accountRepository.listAll());
     }
 
-    public void depositMoney(String accountNumber, double amount) throws InvalidAmountException {
+    public void depositMoney(String accountNumber, Operation operation) throws InvalidAmountException {
         Account account = getAccount(accountNumber);
-        account.deposit(amount);
+        account.deposit(operation);
         updateAccount(account);
     }
 
-    public void withdrawMoney(String accountNumber, double amount) throws NotAuthorizedOverdraftException, UnknownAccountException {
+    public void withdrawMoney(String accountNumber, Operation operation) throws NotAuthorizedOverdraftException, UnknownAccountException {
         Account account;
         account = getAccount(accountNumber);
-        account.withdraw(amount);
+        account.withdraw(operation);
         updateAccount(account);
     }
 
@@ -41,17 +44,6 @@ public class AccountService {
         } else {
             throw new UnknownAccountException("Account " + accountNumber + " doesn't exist");
         }
-    }
-
-    public double getBalance(String accountNumber) throws UnknownAccountException {
-        double balance;
-        //TODO ne devrait pas être nécessaire mais l'exception ne se propage pas sinon :/
-        try {
-            balance = getAccount(accountNumber).getBalance();
-        } catch (UnknownAccountException e) {
-            throw new UnknownAccountException(e.getMessage());
-        }
-        return balance;
     }
 
     public void createAccount(String accountNumber) throws AlreadyExistsAccountException {

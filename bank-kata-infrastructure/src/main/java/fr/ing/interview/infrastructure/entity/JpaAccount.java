@@ -1,10 +1,11 @@
 package fr.ing.interview.infrastructure.entity;
 
 import fr.ing.interview.domain.Account;
+import fr.ing.interview.domain.Operation;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity(name = "Account")
 @Table(name = "ACCOUNT")
@@ -13,6 +14,8 @@ public class JpaAccount {
     @Id
     private String accountNumber;
     private double balance;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<JpaOperation> operations;
 
     public JpaAccount() {
     }
@@ -20,9 +23,14 @@ public class JpaAccount {
     public JpaAccount(Account account) {
         this.accountNumber = account.getAccountNumber();
         this.balance = account.getBalance();
+        this.operations = account.getOperations()
+                .stream()
+                .map(operation -> new JpaOperation(operation))
+                .collect(Collectors.toList());
     }
 
     public Account toAccount() {
-        return new Account(accountNumber, balance);
+        List<Operation> operations = this.operations.stream().map(JpaOperation::toOperation).collect(Collectors.toList());
+        return new Account(accountNumber, balance, operations);
     }
 }

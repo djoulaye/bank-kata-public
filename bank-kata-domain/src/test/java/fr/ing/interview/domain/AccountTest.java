@@ -40,26 +40,30 @@ class AccountTest {
         @Test
         @DisplayName("€0.01 deposit must be refused")
         void given_amount_of_0_01_when_deposit_on_existing_account_then_refuse_deposit() {
-            assertThatThrownBy(() -> account.deposit(AMOUNT_0_01)).isInstanceOf(InvalidAmountException.class);
+            Operation operation = new Operation(OperationDirection.CREDIT, AMOUNT_0_01);
+            assertThatThrownBy(() -> account.deposit(operation)).isInstanceOf(InvalidAmountException.class);
         }
 
         @Test
         @DisplayName("Minimum deposit must be accepted")
         void given_amount_of_0_02_when_deposit_on_existing_account_then_accept_deposit() {
-            assertThat(account.deposit(AMOUNT_0_02)).isTrue();
+            Operation operation = new Operation(OperationDirection.CREDIT, AMOUNT_0_02);
+            assertThat(account.deposit(operation)).isTrue();
         }
 
         @Test
         @DisplayName("Negative deposit must be refused")
         void given_negative_amount_when_deposit_on_existing_account_then_refuse_deposit() {
-            assertThatThrownBy(() -> account.deposit(NEGATIVE_AMOUNT_0_01)).isInstanceOf(InvalidAmountException.class);
+            Operation operation = new Operation(OperationDirection.CREDIT, NEGATIVE_AMOUNT_0_01);
+            assertThatThrownBy(() -> account.deposit(operation)).isInstanceOf(InvalidAmountException.class);
         }
 
         @ParameterizedTest(name = "€{0} deposit must be accepted")
         @ValueSource(doubles = {AMOUNT_15_00, AMOUNT_150_50, AMOUNT_1000_99})
         @DisplayName("Deposit superior of minimum must be accepted")
         void given_amount_superior_of_0_02_when_deposit_on_existing_account_then_accept_deposit(Double amount) {
-            assertThat(account.deposit(amount)).isTrue();
+            Operation operation = new Operation(OperationDirection.CREDIT, amount);
+            assertThat(account.deposit(operation)).isTrue();
         }
     }
 
@@ -69,35 +73,43 @@ class AccountTest {
         @Test
         @DisplayName("Withdraw inferior to balance must be accepted")
         void given_amount_inferior_to_balance_when_withdraw_on_existing_account_then_accept_withdraw() {
-            account.deposit(AMOUNT_10_00);
-            assertThat(account.withdraw(AMOUNT_5_00)).isTrue();
+            Operation deposit = new Operation(OperationDirection.CREDIT, AMOUNT_10_00);
+            Operation withdrawal = new Operation(OperationDirection.DEBIT, AMOUNT_5_00);
+            account.deposit(deposit);
+            assertThat(account.withdraw(withdrawal)).isTrue();
         }
 
         @Test
         @DisplayName("Withdraw equals to balance must be accepted")
         void given_amount_equals_to_balance_when_withdraw_on_existing_account_then_accept_withdraw() {
-            account.deposit(AMOUNT_10_00);
-            assertThat(account.withdraw(AMOUNT_10_00)).isTrue();
+            Operation deposit = new Operation(OperationDirection.CREDIT, AMOUNT_10_00);
+            Operation withdrawal = new Operation(OperationDirection.DEBIT, AMOUNT_10_00);
+            account.deposit(deposit);
+            assertThat(account.withdraw(withdrawal)).isTrue();
         }
 
         @Test
         @DisplayName("Withdraw superior to balance must be refused")
         void given_amount_superior_to_balance_when_withdraw_on_existing_account_then_refuse_withdraw() {
-            account.deposit(AMOUNT_10_00);
-            assertThatThrownBy(() -> account.withdraw(AMOUNT_15_00)).isInstanceOf(NotAuthorizedOverdraftException.class);
+            Operation deposit = new Operation(OperationDirection.CREDIT, AMOUNT_10_00);
+            Operation withdrawal = new Operation(OperationDirection.DEBIT, AMOUNT_15_00);
+            account.deposit(deposit);
+            assertThatThrownBy(() -> account.withdraw(withdrawal)).isInstanceOf(NotAuthorizedOverdraftException.class);
         }
 
         @Test
         @DisplayName("Withdraw negative amount must be refused")
         void given_negative_amount_when_withdraw_on_existing_account_then_refuse_withdraw() {
-            account.deposit(AMOUNT_10_00);
-            assertThatThrownBy(() -> account.withdraw(NEGATIVE_AMOUNT_0_01)).isInstanceOf(IllegalWithdrawAmountException.class);
+            Operation deposit = new Operation(OperationDirection.CREDIT, AMOUNT_10_00);
+            Operation withdrawal = new Operation(OperationDirection.DEBIT, NEGATIVE_AMOUNT_0_01);
+            assertThatThrownBy(() -> account.withdraw(withdrawal)).isInstanceOf(IllegalWithdrawAmountException.class);
         }
 
         @Test
         @DisplayName("Withdraw is forbidden when balance is null")
         void given_account_with_null_balance_when_withdraw_on_existing_account_then_refuse_withdraw() {
-            assertThatThrownBy(() -> account.withdraw(AMOUNT_10_00)).isInstanceOf(ForbiddenWithdrawOnNullBalanceException.class);
+            Operation withdrawal = new Operation(OperationDirection.DEBIT, AMOUNT_10_00);
+            assertThatThrownBy(() -> account.withdraw(withdrawal)).isInstanceOf(ForbiddenWithdrawOnNullBalanceException.class);
         }
     }
 }
