@@ -1,4 +1,4 @@
-package fr.ing.interview.config;
+package fr.ing.interview.exposition.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

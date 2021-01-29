@@ -1,4 +1,4 @@
-package fr.ing.interview.controller;
+package fr.ing.interview.exposition.controller;
 
 import fr.ing.interview.application.AccountInformation;
 import fr.ing.interview.application.AccountManagement;
@@ -8,6 +8,8 @@ import fr.ing.interview.application.exception.UnknownAccountException;
 import fr.ing.interview.domain.Account;
 import fr.ing.interview.domain.exception.InvalidAmountException;
 import fr.ing.interview.domain.exception.NotAuthorizedOverdraftException;
+import fr.ing.interview.exposition.adapter.AccountHistoryAdapter;
+import fr.ing.interview.exposition.dto.AccountHistoryDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,9 @@ public class AccountController {
     @Autowired
     private MoneyTransfer moneyTransfer;
 
+    @Autowired
+    private AccountHistoryAdapter accountHistoryAdapter;
+
     @GetMapping("/displayBalance/{accountNumber}")
     public ResponseEntity<String> displayBalance(@PathVariable("accountNumber") String accountNumber) {
         double balance;
@@ -38,14 +43,14 @@ public class AccountController {
     }
 
     @GetMapping("/displayHistory/{accountNumber}")
-    public ResponseEntity<Account> displayHistory(@PathVariable("accountNumber") String accountNumber) {
+    public ResponseEntity<AccountHistoryDto> displayHistory(@PathVariable("accountNumber") String accountNumber) {
         Account account;
         try {
             account = accountInformation.getHistoryOfAccount(accountNumber);
         } catch (UnknownAccountException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(account, HttpStatus.OK);
+        return new ResponseEntity<>(accountHistoryAdapter.convert(account), HttpStatus.OK);
     }
 
     @PostMapping("/create")
