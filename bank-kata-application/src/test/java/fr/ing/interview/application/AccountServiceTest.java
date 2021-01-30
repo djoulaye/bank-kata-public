@@ -39,7 +39,7 @@ class AccountServiceTest {
     @Test
     void deposit_amount_on_existing_account_should_not_throw_exception() {
         //Arrange
-        Account account = new Account("EXISTING_ACCOUNT_NUMBER");
+        Account account = new Account(EXISTING_ACCOUNT_NUMBER);
         when(accountRepository.findByAccountNumber(EXISTING_ACCOUNT_NUMBER)).thenReturn(Optional.of(account));
         Operation depositOperation = new Operation(OperationDirection.CREDIT, AMOUNT_10_00);
 
