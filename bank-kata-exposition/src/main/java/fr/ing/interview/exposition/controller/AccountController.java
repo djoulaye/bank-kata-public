@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/account")
@@ -48,7 +49,7 @@ public class AccountController {
         try {
             account = accountInformation.getHistoryOfAccount(accountNumber);
         } catch (UnknownAccountException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
         }
         return new ResponseEntity<>(accountHistoryAdapter.convert(account), HttpStatus.OK);
     }
