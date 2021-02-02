@@ -31,11 +31,14 @@ Regarder comment améliorer la gestion des exceptions (avec moins de try catch)
   AccountService est mocké donc pas de raison de mocker le repo (et pas de sens car c'est un mock et non le vrai
   service). Si on fait un TI, alors le problème est de lancer Spring dans un module qui n'est pas une application
   Spring. En tout cas le extendWith est à remplacer par le Spring. Dans ce deuxième cas, cela pose aussi la question de
-  l'autowired sur les attributs, qui empêche l'instanciation manuelle dans le cadre du test. Réponse :
+  l'autowired sur les attributs, qui empêche l'instanciation manuelle dans le cadre du test. 
+  Réponse : J'ai compris pour le TU, je vais regarder ce que tu as fait
+  Pour le TI, pour moi on doit mettre l'extension SpringExtension et faire des MockBean au lieu des mock , c'est ça ?
+  
 - Concernant les exceptions dans les contrôleurs, il semble falloir effet passer par un advice ou une
   ResponseStatusException. Le ResponseStatusException provoque l'appel du endpoint /error, et nécessite la surcharge de
   l'ErrorController par défaut pour remplacer la WhiteLabel Page. Le type de retour est également à étudier, car
   retourner un String dans le body n'est pas vraiment RestFul. Il faudrait définir un ErrorDto qui contient le message.
-  Réponse :
+  Réponse : Trop compliqué, j'ai rien compris :D
 - Est ce que le AccountService (tout court) qui fait principalement du crud ne serait pas justement l'implémentation de
-  l'interface repository (du domaine) par l'infra ? Réponse
+  l'interface repository (du domaine) par l'infra ? Réponse : oui je pense mais je ne comprends pas ce que ça implique ^^
