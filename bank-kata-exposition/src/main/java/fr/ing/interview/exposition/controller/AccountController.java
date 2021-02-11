@@ -49,7 +49,7 @@ public class AccountController {
         try {
             account = accountInformation.getHistoryOfAccount(accountNumber);
         } catch (UnknownAccountException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
         }
         return new ResponseEntity<>(accountHistoryAdapter.convert(account), HttpStatus.OK);
     }
