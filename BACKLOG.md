@@ -19,7 +19,6 @@ portemonnaie du joueur. Le joueur peut jouer jusqu'à ce que son portemonnaie so
 solde de la caisse, l'historique des mouvements, la liste des portemonnaies avec leur solde, ainsi que l'historique des
 mouvements de chaque portemonnaie.
 
-
 # Améliorations
 
 X- renommer les méthodes 
