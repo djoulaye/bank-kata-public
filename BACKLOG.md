@@ -80,3 +80,13 @@ Contexte : Un joueur interdit de jeu voit son porte-monnaie passer au statut "su
 - DDD
 - Api Octo
 - Git Flow
+
+#Process branches
+1. pull sur la branche develop
+2. git checkout -b feature/<nom-us>
+3. commit régulier avec message qui comment toujours pas [<nom-us>]
+4. push à la fin d'une session de travail
+5. merge request dans github quand terminé pour code review
+6. pull sur la branche develop, puis merge --squash <branche-à-merger>
+7. commit avec [<nom-us>] en dans le message, puis résumé de l'us 
+8. push
