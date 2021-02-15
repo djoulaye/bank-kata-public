@@ -31,9 +31,18 @@ X- gérer l'exception dans le contrôleur
 - décrire la structure Maven
 
 # US PARTIE COMPTE
+C-US1: EN TANT QU'utilisateur JE VEUX créer un compte sur www.bellagio.com AFIN DE jouer à des jeux de casino en ligne
+Contexte : Un utilisateur peut créer un compte sur le site www.bellagio.com afin de jouer à des jeux de casino en ligne
+Critères d'acceptance : 
+- Il faut être majeur pour créer un compte
+
+C-US2: EN TANT QU'utilisateur JE VEUX créer un compte sur www.bellagio.com AFIN DE jouer à des jeux de casino en ligne
+Contexte : Un utilisateur peut créer un compte sur le site www.bellagio.com afin de jouer à des jeux de casino en ligne
+Critères d'acceptance : 
+- Il faut être majeur pour créer un compte
 
 # US PARTIE CAISSE ET PORTE MONNAIE
-US1 : EN TANT QUE joueur JE VEUX ajouter de l'argent sur mon porte-monnaie AFIN DE jouer à des jeux
+PM-US1 : EN TANT QUE joueur JE VEUX ajouter de l'argent sur mon porte-monnaie AFIN DE jouer à des jeux
 Contexte : Une fois le compte validé, le joueur dispose d'un porte-monnaie. C'est l'argent de ce porte-monnaie qu'il va pouvoir jouer. Le joueur peut ajouter de l'argent.
 Critères d'acceptance : 
 - Le joueur doit déposer au minimum 1€ à chaque dépôt
@@ -41,7 +50,7 @@ Critères d'acceptance :
 - Le joueur peut faire un dépôt par jour maximum
 - Le porte-monnaie ne peut pas contenir plus de 10 000€
 
-US2 : EN TANT QUE joueur JE VEUX retirer de l'argent sur de mon porte-monnaie AFIN DE récupérer l'argent dont je dispose sur mon porte-monnaie
+PM-US2 : EN TANT QUE joueur JE VEUX retirer de l'argent sur de mon porte-monnaie AFIN DE récupérer l'argent dont je dispose sur mon porte-monnaie
 Contexte : Le joueur peut retirer de l'argent de son porte-monnaie pour le récupérer. 
 Critères d'acceptance : 
 - Le porte-monnaie ne peut pas être débiteur
@@ -49,7 +58,7 @@ Critères d'acceptance :
 - Le joueur peut retirer 1 500€ maximum sans validation du casino
 - Le joueur doit obtenir la validation du casino pour retirer plus de 1 500€
 
-US3 : EN TANT QUE casino JE VEUX que le porte-monnaie ait un statut AFIN DE spécifier que le joueur peut utiliser son porte-monnaie pour jouer ou non
+PM-US3 : EN TANT QUE casino JE VEUX que le porte-monnaie ait un statut AFIN DE spécifier que le joueur peut utiliser son porte-monnaie pour jouer ou non
 Contexte : le porte-monnaie du joueur a un statut qui suit un cycle de vie
 - à la création du compte, le porte-monnaie est "à valider"
 - une fois le compte approuvé, le porte-monnaie devient "valide"
@@ -57,11 +66,11 @@ Contexte : le porte-monnaie du joueur a un statut qui suit un cycle de vie
 - lorsque l'interdiction de jeu est levée, le porte-monnaie est "valide"
 - lorsque le compte est fermé, le porte-monnaie est "clos"
 
-US4 : EN TANT QUE casino JE VEUX connaître l'historique des statuts d'un porte-monnaie AFIN DE conserver son historique
+PM-US4 : EN TANT QUE casino JE VEUX connaître l'historique des statuts d'un porte-monnaie AFIN DE conserver son historique
 Contexte : le cycle de vie du porte-monnaie doit être enregistré
 - Le changement de statut doit être stocké avec la date du jour et l'heure
 
-US5 : EN TANT QUE casino JE VEUX lister les joueurs actuellement interdits de jeu AFIN DE ???
+PM-US5 : EN TANT QUE casino JE VEUX lister les joueurs actuellement interdits de jeu AFIN DE ???
 Contexte : Un joueur interdit de jeu voit son porte-monnaie passer au statut "suspendu"
 - ???
 
