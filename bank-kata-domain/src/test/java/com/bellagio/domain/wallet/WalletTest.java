@@ -1,11 +1,27 @@
 package com.bellagio.domain.wallet;
 
+import com.bellagio.domain.Operation;
+import com.bellagio.domain.OperationDirection;
+import com.bellagio.domain.exception.InvalidAmountException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+
 @DisplayName("Tests on wallet entity")
 class WalletTest {
+
+    private static final String PLAYER_ID = "123456";
+    public static final double AMOUNT_0_99 = 0.99;
+    private Wallet wallet;
+
+    @BeforeEach
+    private void init() {
+        wallet = new Wallet(PLAYER_ID);
+    }
 
     @Nested
     @DisplayName("Tests on wallet deposit")
@@ -14,7 +30,8 @@ class WalletTest {
         @Test
         @DisplayName("Deposit minimum amount is 1€")
         public void given_amount_under_1_euro_then_refuse_deposit() {
-
+            Operation operation = new Operation(OperationDirection.CREDIT, AMOUNT_0_99);
+            assertThatThrownBy(() -> wallet.deposit(operation)).isInstanceOf(InvalidAmountException.class);
         }
 
         @Test
