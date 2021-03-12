@@ -16,6 +16,7 @@ class WalletTest {
 
     private static final String PLAYER_ID = "123456";
     public static final double AMOUNT_0_99 = 0.99;
+    public static final double AMOUNT_1500_01 = 1500.01;
     private Wallet wallet;
 
     @BeforeEach
@@ -37,7 +38,8 @@ class WalletTest {
         @Test
         @DisplayName("Deposit maximum amount is 1500€")
         public void given_amount_above_1500_euro_then_refuse_deposit() {
-
+            Operation operation = new Operation(OperationDirection.CREDIT, AMOUNT_1500_01);
+            assertThatThrownBy(() -> wallet.deposit(operation)).isInstanceOf(InvalidAmountException.class);
         }
 
         @Test
