@@ -4,6 +4,7 @@ import com.bellagio.domain.Operation;
 import com.bellagio.domain.OperationDirection;
 import com.bellagio.domain.exception.ExcessiveBalanceException;
 import com.bellagio.domain.exception.InvalidAmountException;
+import com.bellagio.domain.exception.TooManyDepositException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -63,6 +64,14 @@ class WalletTest {
             }
             Operation operation2 = new Operation(OperationDirection.CREDIT, AMOUNT_1_00);
             assertThatThrownBy(() -> wallet.deposit(operation2)).isInstanceOf(ExcessiveBalanceException.class);
+        }
+
+        @Test
+        @DisplayName("Only one deposit per day is allowed")
+        public void given_more_than_one_deposit_on_same_day_then_refuse_deposit() {
+            Operation operation = new Operation(OperationDirection.CREDIT, AMOUNT_1000_00);
+            assertThat(wallet.deposit(operation)).isTrue();
+            assertThatThrownBy(() -> wallet.deposit(operation)).isInstanceOf(TooManyDepositException.class);
         }
 
     }
