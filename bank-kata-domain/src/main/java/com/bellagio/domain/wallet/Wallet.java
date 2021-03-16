@@ -22,6 +22,11 @@ public class Wallet {
         this.playerId = playerId;
     }
 
+    public Wallet(String playerId, double initialBalance) {
+        this.playerId = playerId;
+        this.balance = initialBalance;
+    }
+
     public boolean deposit(Operation operation) {
         if (operation.getAmount() < MINIMUM_AMOUNT_FOR_DEPOSIT) {
             throw new InvalidAmountException("Deposit amount must be more than " + MINIMUM_AMOUNT_FOR_DEPOSIT + " euros");

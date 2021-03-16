@@ -23,6 +23,7 @@ class WalletTest {
     public static final double AMOUNT_1500_01 = 1500.01;
     public static final double AMOUNT_500_00 = 500.00;
     public static final double AMOUNT_1000_00 = 1000.00;
+    public static final double AMOUNT_10000_00 = 10000.00;
     private Wallet wallet;
 
     @BeforeEach
@@ -58,12 +59,9 @@ class WalletTest {
         @Test
         @DisplayName("Wallet maximum balance is 10,000€")
         public void given_resulting_balance_above_10000_euro_then_refuse_deposit() {
-            Operation operation = new Operation(OperationDirection.CREDIT, AMOUNT_1000_00);
-            for (int i = 0; i < 10; i++) {
-                assertThat(wallet.deposit(operation)).isTrue();
-            }
-            Operation operation2 = new Operation(OperationDirection.CREDIT, AMOUNT_1_00);
-            assertThatThrownBy(() -> wallet.deposit(operation2)).isInstanceOf(ExcessiveBalanceException.class);
+            wallet = new Wallet(PLAYER_ID, AMOUNT_10000_00);
+            Operation operation = new Operation(OperationDirection.CREDIT, AMOUNT_1_00);
+            assertThatThrownBy(() -> wallet.deposit(operation)).isInstanceOf(ExcessiveBalanceException.class);
         }
 
         @Test
