@@ -39,6 +39,7 @@ Critères d'acceptance :
 C-US2: EN TANT QU'utilisateur JE VEUX clôturer mon compte sur www.bellagio.com AFIN DE récupérer l'argent de mon
 porte-monnaie Contexte : Un utilisateur peut clôturer un compte sur le site www.bellagio.com afin de récupérer son
 argent et supprimer ses données personnelles Critères d'acceptance :
+
 - Le compte doit être à l'état valide ou à valider
 
 # US PARTIE CAISSE ET PORTE MONNAIE
