@@ -22,19 +22,37 @@ mouvements de chaque portemonnaie.
 # Améliorations
 
 X- renommer les méthodes 
-X- renommer la classe de test
-X- modifier les request mappings
-X- gérer l'exception dans le contrôleur
+X- renommer la classe de test X- modifier les request mappings X- gérer l'exception dans le contrôleur
+
 - modifier les paramètres des contrôleurs
 - blinder les tu si pas suffisant
 - décrire la mise en place Spring
 - décrire la structure Maven
 
 # US PARTIE COMPTE
-C-US1: EN TANT QU'utilisateur JE VEUX créer un compte sur www.bellagio.com AFIN DE jouer à des jeux de casino en ligne
+
+C-US1.1: EN TANT QU'utilisateur JE VEUX créer un compte sur www.bellagio.com AFIN DE jouer à des jeux de casino en ligne
 Contexte : Un utilisateur peut créer un compte sur le site www.bellagio.com afin de jouer à des jeux de casino en ligne
-Critères d'acceptance : 
-- Il faut être majeur pour créer un compte
+Critères d'acceptance :
+
+- Le joueur doit obligatoirement fournir nom + prénom + date et lieu de naissance + email + numéro de carte d'identité
+- Le joueur doit choisir un pseudonyme et un mot de passe (avec confirmation)
+- Le système doit vérifier que l'email n'est pas déjà lié à un compte existant
+- Le système doit vérifier que le pseudonyme n'existe pas déjà
+- Il faut être majeur (18 ans) pour créer un compte
+- Le compte est créé à l'état brouillon
+
+C-US1.2: EN TANT QU'utilisateur JE DOIS préciser mes informations bancaires AFIN DE compléter mon inscription Contexte :
+Après avoir fourni ses informations personnelles, l'utilisateur doit fournir un moyen de paiement valide afin d'
+alimenter son porte monnaie Critères d'acceptance :
+
+- Le compte doit être à l'état brouillon, ou à l'état valide avec un moyen de paiement expiré.
+- Le joueur doit fournir un numéro de CB + date expiration + CVS
+- La CB du joueur ne doit pas être expirée, ni expirer durant le mois en cours
+- Le joueur choisit le montant de son versement initial qui ne peut être ni inférieur à 10 euros, ni supérieur à la
+  limite des dépôts
+- Le joueur peut préciser sa limite mensuelle correspondant au montant joué à partir duquel son compte sera suspendu
+- Le compte passe à l'état à valider lorsque le joueur valide sa demande d'inscription
 
 C-US2: EN TANT QU'utilisateur JE VEUX clôturer mon compte sur www.bellagio.com AFIN DE récupérer l'argent de mon
 porte-monnaie Contexte : Un utilisateur peut clôturer un compte sur le site www.bellagio.com afin de récupérer son
@@ -42,18 +60,31 @@ argent et supprimer ses données personnelles Critères d'acceptance :
 
 - Le compte doit être à l'état valide ou à valider
 
+C-US3: EN TANT QUE casino JE VEUX approuver la création du compte du joueur AFIN de valider son inscription Contexte :
+Après que le joueur ait validé sa demande d'inscription, le casino doit approuver la demande pour que le joueur puisse
+commencer à jouer sur www.bellagio.com
+Critères d'acceptance :
+
+- Le compte doit être à l'état à valider
+- Si le numéro de CNI est dans la base des clients interdits, le système doit refuser la validation du compte et le
+  passer à interdit
+- Le compte passe à l'état valide après approbation du casino
+
 # US PARTIE CAISSE ET PORTE MONNAIE
-PM-US1 : EN TANT QUE joueur JE VEUX ajouter de l'argent sur mon porte-monnaie AFIN DE jouer à des jeux
-Contexte : Une fois le compte validé, le joueur dispose d'un porte-monnaie. C'est l'argent de ce porte-monnaie qu'il va pouvoir jouer. Le joueur peut ajouter de l'argent.
-Critères d'acceptance : 
+
+PM-US1 : EN TANT QUE joueur JE VEUX ajouter de l'argent sur mon porte-monnaie AFIN DE jouer à des jeux Contexte : Une
+fois le compte validé, le joueur dispose d'un porte-monnaie. C'est l'argent de ce porte-monnaie qu'il va pouvoir jouer.
+Le joueur peut ajouter de l'argent. Critères d'acceptance :
+
 - Le joueur doit déposer au minimum 1€ à chaque dépôt
 - Le joueur ne peut pas déposer plus de 1 500€ par dépôt
 - Le joueur peut faire un dépôt par jour maximum
 - Le porte-monnaie ne peut pas contenir plus de 10 000€
 
-PM-US2 : EN TANT QUE joueur JE VEUX retirer de l'argent sur de mon porte-monnaie AFIN DE récupérer l'argent dont je dispose sur mon porte-monnaie
-Contexte : Le joueur peut retirer de l'argent de son porte-monnaie pour le récupérer. 
-Critères d'acceptance : 
+PM-US2 : EN TANT QUE joueur JE VEUX retirer de l'argent sur de mon porte-monnaie AFIN DE récupérer l'argent dont je
+dispose sur mon porte-monnaie Contexte : Le joueur peut retirer de l'argent de son porte-monnaie pour le récupérer.
+Critères d'acceptance :
+
 - Le porte-monnaie ne peut pas être débiteur
 - Le joueur peut faire un retrait maximum par joueur
 - Le joueur peut retirer 1 500€ maximum sans validation du casino
