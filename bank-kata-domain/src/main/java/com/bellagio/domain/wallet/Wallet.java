@@ -1,9 +1,7 @@
 package com.bellagio.domain.wallet;
 
 import com.bellagio.domain.Operation;
-import com.bellagio.domain.exception.ExcessiveBalanceException;
-import com.bellagio.domain.exception.InvalidAmountException;
-import com.bellagio.domain.exception.TooManyDepositException;
+import com.bellagio.domain.exception.*;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -14,9 +12,11 @@ public class Wallet {
     public static final double MINIMUM_AMOUNT_FOR_DEPOSIT = 1.00;
     public static final double MAXIMUM_AMOUNT_FOR_DEPOSIT = 1500.00;
     public static final double MAXIMUM_BALANCE_FOR_WALLET = 10000.00;
+    public static final double MINIMUM_BALANCE_FOR_WALLET = 0.00;
     private String playerId;
     private double balance;
     private Date lastDepositDate;
+    private Date lastWithdrawalDate;
 
     public Wallet(String playerId) {
         this.playerId = playerId;
@@ -48,6 +48,26 @@ public class Wallet {
         lastDepositDate = new Date();
 
         return true;
+    }
+
+    public boolean withdraw(Operation operation) {
+
+        if (balance - operation.getAmount() < MINIMUM_BALANCE_FOR_WALLET) {
+            throw new InsufficientBalanceException("Balance can't be less than  " + MINIMUM_BALANCE_FOR_WALLET + " euros");
+        }
+
+        if (isDateOfToday(lastWithdrawalDate)) {
+            throw new TooManyWithdrawalException("Only one withdrawal is allowed each day");
+        }
+
+        balance -= operation.getAmount();
+        lastWithdrawalDate = new Date();
+
+        return true;
+    }
+
+    public double getBalance() {
+        return balance;
     }
 
     private boolean isDateOfToday(Date lastDepositDate) {
