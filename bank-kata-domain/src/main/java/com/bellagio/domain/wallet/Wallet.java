@@ -11,6 +11,7 @@ public class Wallet {
 
     public static final double MINIMUM_AMOUNT_FOR_DEPOSIT = 1.00;
     public static final double MAXIMUM_AMOUNT_FOR_DEPOSIT = 1500.00;
+    public static final double MAXIMUM_AMOUNT_FOR_WITHDRAWAL = 1500.00;
     public static final double MAXIMUM_BALANCE_FOR_WALLET = 10000.00;
     public static final double MINIMUM_BALANCE_FOR_WALLET = 0.00;
     private String playerId;
@@ -51,6 +52,10 @@ public class Wallet {
     }
 
     public boolean withdraw(Operation operation) {
+
+        if (operation.getAmount() > MAXIMUM_AMOUNT_FOR_WITHDRAWAL) {
+            throw new InvalidAmountException("Withdrawal amount must be less than " + MAXIMUM_AMOUNT_FOR_WITHDRAWAL + " euros");
+        }
 
         if (balance - operation.getAmount() < MINIMUM_BALANCE_FOR_WALLET) {
             throw new InsufficientBalanceException("Balance can't be less than  " + MINIMUM_BALANCE_FOR_WALLET + " euros");

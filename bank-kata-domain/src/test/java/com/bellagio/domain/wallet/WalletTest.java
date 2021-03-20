@@ -93,6 +93,13 @@ class WalletTest {
         }
 
         @Test
+        @DisplayName("Withdrawal maximum amount is 1,500€")
+        public void given_amount_above_1500_euro_then_refuse_deposit() {
+            Operation operation = new Operation(OperationDirection.DEBIT, AMOUNT_1500_01);
+            assertThatThrownBy(() -> wallet.withdraw(operation)).isInstanceOf(InvalidAmountException.class);
+        }
+
+        @Test
         @DisplayName("Only one withdrawal per day is allowed")
         public void given_more_than_one_withdrawal_on_same_day_then_refuse_withdrawal() {
             wallet = new Wallet(PLAYER_ID, AMOUNT_1000_00);
