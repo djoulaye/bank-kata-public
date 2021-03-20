@@ -31,18 +31,44 @@ X- renommer la classe de test X- modifier les request mappings X- gérer l'excep
 
 # US PARTIE COMPTE
 
-C-US1.1: EN TANT QU'utilisateur JE VEUX créer un compte sur www.bellagio.com AFIN DE jouer à des jeux de casino en ligne
+C-US1 : EN TANT QU'utilisateur 
+JE VEUX créer un compte sur www.bellagio.com 
+AFIN DE jouer à des jeux de casino en ligne
 Contexte : Un utilisateur peut créer un compte sur le site www.bellagio.com afin de jouer à des jeux de casino en ligne
 Critères d'acceptance :
 
 - Le joueur doit obligatoirement fournir nom + prénom + date et lieu de naissance + email + numéro de carte d'identité
-- Le joueur doit choisir un pseudonyme et un mot de passe (avec confirmation)
-- Le système doit vérifier que l'email n'est pas déjà lié à un compte existant
-- Le système doit vérifier que le pseudonyme n'existe pas déjà
+- Le système doit vérifier que l'email est au bon format et n'est pas déjà lié à un compte existant
 - Il faut être majeur (18 ans) pour créer un compte
 - Le compte est créé à l'état brouillon
 
-C-US1.2: EN TANT QU'utilisateur JE DOIS préciser mes informations bancaires AFIN DE compléter mon inscription Contexte :
+C-US2 : EN TANT QU'utilisateur
+JE VEUX choisir un pseuso
+AFIN DE me connecter à mon compte
+Critères d'acceptance:
+- Le système doit vérifier que le pseudonyme n'existe pas déjà
+
+C-US3 : EN TANT QU'utilisateur
+JE VEUX choisir un mot de passe
+AFIN DE me sécuriser la connexion à mon compte
+Critères d'acceptance:
+- Le mot de passe doit être confirmé (saisi 2 fois)
+- Le mot de passe doit faire entre 5 et 10 caractères
+- Le mot de passe doit contenir au moins 1 majuscule et 1 minuscule
+- Le mot de passe doit contenir au moins 1 chiffre
+- Le mot de passe doit contenir au moins 1 caractère spécial
+
+C-US4 : EN TANT QUE casino
+JE VEUX envoyer un email à l'utilisateur lors de la création de son compte
+AFIN DE m'assurer que l'adresse est bien existantes et utilisée
+Critères d'acceptance:
+- Le système doit envoyer un email avec succès
+- L'utilisateur doit cliquer sur le lien dans le mail pour valider son adresse
+
+
+C-US5 : EN TANT QU'utilisateur 
+JE DOIS préciser mes informations bancaires 
+AFIN DE compléter mon inscription Contexte :
 Après avoir fourni ses informations personnelles, l'utilisateur doit fournir un moyen de paiement valide afin d'
 alimenter son porte monnaie Critères d'acceptance :
 
@@ -54,13 +80,14 @@ alimenter son porte monnaie Critères d'acceptance :
 - Le joueur peut préciser sa limite mensuelle correspondant au montant joué à partir duquel son compte sera suspendu
 - Le compte passe à l'état à valider lorsque le joueur valide sa demande d'inscription
 
-C-US2: EN TANT QU'utilisateur JE VEUX clôturer mon compte sur www.bellagio.com AFIN DE récupérer l'argent de mon
+C-US6 : EN TANT QU'utilisateur JE VEUX clôturer mon compte sur www.bellagio.com AFIN DE récupérer l'argent de mon
 porte-monnaie Contexte : Un utilisateur peut clôturer un compte sur le site www.bellagio.com afin de récupérer son
 argent et supprimer ses données personnelles Critères d'acceptance :
 
 - Le compte doit être à l'état valide ou à valider
 
-C-US3: EN TANT QUE casino JE VEUX approuver la création du compte du joueur AFIN de valider son inscription Contexte :
+C-US7 
+: EN TANT QUE casino JE VEUX approuver la création du compte du joueur AFIN de valider son inscription Contexte :
 Après que le joueur ait validé sa demande d'inscription, le casino doit approuver la demande pour que le joueur puisse
 commencer à jouer sur www.bellagio.com
 Critères d'acceptance :
