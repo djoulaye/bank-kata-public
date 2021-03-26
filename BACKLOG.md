@@ -97,7 +97,7 @@ Critères d'acceptance :
   passer à interdit
 - Le compte passe à l'état valide après approbation du casino
 
-# US PARTIE CAISSE ET PORTE MONNAIE
+# US PARTIE CAISSE ET PORTE MONNAIEè
 
 PM-US1 : EN TANT QUE joueur JE VEUX ajouter de l'argent sur mon porte-monnaie AFIN DE jouer à des jeux Contexte : Une
 fois le compte validé, le joueur dispose d'un porte-monnaie. C'est l'argent de ce porte-monnaie qu'il va pouvoir jouer.

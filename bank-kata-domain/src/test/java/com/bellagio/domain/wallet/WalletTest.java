@@ -2,9 +2,7 @@ package com.bellagio.domain.wallet;
 
 import com.bellagio.domain.Operation;
 import com.bellagio.domain.OperationDirection;
-import com.bellagio.domain.exception.ExcessiveBalanceException;
-import com.bellagio.domain.exception.InvalidAmountException;
-import com.bellagio.domain.exception.TooManyDepositException;
+import com.bellagio.domain.exception.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -23,6 +21,7 @@ class WalletTest {
     public static final double AMOUNT_1500_01 = 1500.01;
     public static final double AMOUNT_500_00 = 500.00;
     public static final double AMOUNT_1000_00 = 1000.00;
+    public static final double AMOUNT_8499_99 = 8499.99;
     public static final double AMOUNT_10000_00 = 10000.00;
     private Wallet wallet;
 
@@ -54,6 +53,7 @@ class WalletTest {
         public void given_amount_between_limits_then_accept_deposit() {
             Operation operation = new Operation(OperationDirection.CREDIT, AMOUNT_500_00);
             assertThat(wallet.deposit(operation)).isTrue();
+            assertThat(wallet.getBalance()).isEqualTo(AMOUNT_500_00);
         }
 
         @Test
@@ -77,6 +77,45 @@ class WalletTest {
     @Nested
     @DisplayName("Tests on wallet withdrawal")
     class WalletWithdrawalTest {
+        @Test
+        @DisplayName("Withdraw between limits is accepted")
+        public void given_amount_between_limits_then_accept_withdraw() {
+            wallet = new Wallet(PLAYER_ID, AMOUNT_1000_00);
+            Operation operation = new Operation(OperationDirection.DEBIT, AMOUNT_500_00);
+            assertThat(wallet.withdraw(operation)).isTrue();
+            assertThat(wallet.getBalance()).isEqualTo(AMOUNT_500_00);
+        }
 
+        @Test
+        @DisplayName("Wallet minimum balance is 0€")
+        public void given_resulting_balance_below_0_euro_then_refuse_withdraw() {
+            Operation operation = new Operation(OperationDirection.DEBIT, AMOUNT_1_00);
+            assertThatThrownBy(() -> wallet.withdraw(operation)).isInstanceOf(InsufficientBalanceException.class);
+        }
+
+        @Test
+        @DisplayName("Withdrawal maximum amount is 1,500€")
+        public void given_amount_above_1500_euro_then_refuse_deposit() {
+            Operation operation = new Operation(OperationDirection.DEBIT, AMOUNT_1500_01);
+            assertThatThrownBy(() -> wallet.withdraw(operation)).isInstanceOf(InvalidAmountException.class);
+        }
+
+        @Test
+        @DisplayName("Withdrawal maximum amount can be overrided")
+        public void given_amount_above_1500_euro_with_casino_aknowledge_then_accept_deposit() {
+            wallet = new Wallet(PLAYER_ID, AMOUNT_10000_00);
+            Operation operation = new Operation(OperationDirection.DEBIT, AMOUNT_1500_01);
+            assertThat(wallet.withdrawOverLimit(operation)).isTrue();
+            assertThat(wallet.getBalance()).isEqualTo(AMOUNT_8499_99);
+        }
+
+        @Test
+        @DisplayName("Only one withdrawal per day is allowed")
+        public void given_more_than_one_withdrawal_on_same_day_then_refuse_withdrawal() {
+            wallet = new Wallet(PLAYER_ID, AMOUNT_1000_00);
+            Operation operation = new Operation(OperationDirection.DEBIT, AMOUNT_500_00);
+            assertThat(wallet.withdraw(operation)).isTrue();
+            assertThatThrownBy(() -> wallet.withdraw(operation)).isInstanceOf(TooManyWithdrawalException.class);
+        }
     }
 }
