@@ -21,6 +21,7 @@ class WalletTest {
     public static final double AMOUNT_1500_01 = 1500.01;
     public static final double AMOUNT_500_00 = 500.00;
     public static final double AMOUNT_1000_00 = 1000.00;
+    public static final double AMOUNT_8499_99 = 8499.99;
     public static final double AMOUNT_10000_00 = 10000.00;
     private Wallet wallet;
 
@@ -97,6 +98,15 @@ class WalletTest {
         public void given_amount_above_1500_euro_then_refuse_deposit() {
             Operation operation = new Operation(OperationDirection.DEBIT, AMOUNT_1500_01);
             assertThatThrownBy(() -> wallet.withdraw(operation)).isInstanceOf(InvalidAmountException.class);
+        }
+
+        @Test
+        @DisplayName("Withdrawal maximum amount can be overrided")
+        public void given_amount_above_1500_euro_with_casino_aknowledge_then_accept_deposit() {
+            wallet = new Wallet(PLAYER_ID, AMOUNT_10000_00);
+            Operation operation = new Operation(OperationDirection.DEBIT, AMOUNT_1500_01);
+            assertThat(wallet.withdrawOverLimit(operation)).isTrue();
+            assertThat(wallet.getBalance()).isEqualTo(AMOUNT_8499_99);
         }
 
         @Test

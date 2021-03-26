@@ -57,6 +57,11 @@ public class Wallet {
             throw new InvalidAmountException("Withdrawal amount must be less than " + MAXIMUM_AMOUNT_FOR_WITHDRAWAL + " euros");
         }
 
+        return withdrawOverLimit(operation);
+
+    }
+
+    public boolean withdrawOverLimit(Operation operation) {
         if (balance - operation.getAmount() < MINIMUM_BALANCE_FOR_WALLET) {
             throw new InsufficientBalanceException("Balance can't be less than  " + MINIMUM_BALANCE_FOR_WALLET + " euros");
         }
