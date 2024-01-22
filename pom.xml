@@ -30,7 +30,7 @@
         <java.version>8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <json-path.version>2.4.0</json-path.version>
+        <json-path.version>2.9.0</json-path.version>
         <cucumber-version>6.9.1</cucumber-version>
         <mockito-version>3.7.7</mockito-version>
         <mapstruct.version>1.4.1.Final</mapstruct.version>
